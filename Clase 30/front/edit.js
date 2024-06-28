@@ -33,10 +33,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     };
 
-    await cargarDatosPosteo();
-
     formEditarPosteo.addEventListener("submit", async (event) => {
         event.preventDefault();
         await guardarCambios();
     });
+
+    await cargarDatosPosteo();
 });
