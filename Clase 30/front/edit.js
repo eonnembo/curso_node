@@ -18,15 +18,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
 
     const guardarCambios = async () => {
-        const nuevoTitulo = inputTitulo.value;
-        const nuevoContenido = textareaContenido.value;
+        const updatePosteo = {
+            titulo: inputTitulo.value,
+            contenido: textareaContenido.value
+        }
 
         try {
-            await axios.put(`http://localhost:3000/posteos/${postId}`, {
-                titulo: nuevoTitulo,
-                contenido: nuevoContenido
-            });
-
+            await axios.put(`http://localhost:3000/posteos/${postId}`, updatePosteo);
             window.location.href = "index.html";
         } catch (error) {
             console.error("Error al guardar los cambios:", error);
