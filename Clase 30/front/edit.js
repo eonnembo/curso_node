@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         try {
             await axios.put(`http://localhost:3000/posteos/${postId}`, updatePosteo);
+            alert("Posteo modificado correctamente!")
             window.location.href = "index.html";
         } catch (error) {
             console.error("Error al guardar los cambios:", error);
