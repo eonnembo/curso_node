@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const bodyTablaPosteos = document.querySelector("#body-tabla-posteos");
     const formCrearPosteo = document.querySelector("#form-crear-posteo");
 
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const borrarPosteo = async (id) => {
         try {
             await axios.delete(`http://localhost:3000/posteos/${id}`);
-            fetchPosteos();
+            await fetchPosteos();
         } catch (error) {
             console.error("Error al borrar el posteo:", error);
         }
@@ -56,24 +56,22 @@ document.addEventListener("DOMContentLoaded", () => {
     formCrearPosteo.addEventListener("submit", async (event) => {
         event.preventDefault(); // Evita que se recargue la página al enviar el formulario
 
-        const nuevoTitulo = document.querySelector("#nuevo-titulo").value;
-        const nuevoContenido = document.querySelector("#nuevo-contenido").value;
+        const nuevoPosteo = {
+            titulo: document.querySelector("#nuevo-titulo").value,
+            contenido: document.querySelector("#nuevo-contenido").value
+        }
 
         try {
-            await axios.post("http://localhost:3000/posteos", {
-                titulo: nuevoTitulo,
-                contenido: nuevoContenido
-            });
+            await axios.post("http://localhost:3000/posteos", nuevoPosteo);
 
             // Limpiar los campos del formulario
-            document.querySelector("#nuevo-titulo").value = "";
-            document.querySelector("#nuevo-contenido").value = "";
+            formCrearPosteo.reset();
 
-            fetchPosteos(); // Actualizar la lista de posteos
+            await fetchPosteos(); // Actualizar la lista de posteos
         } catch (error) {
             console.error("Error al crear el posteo:", error);
         }
     });
 
-    fetchPosteos();
+    await fetchPosteos();
 });
